@@ -1,4 +1,4 @@
-extends Sprite
+extends Node2D
 
 const GRAVITY = 1000;
 const FALLING_MUTIPLIER = 1.25;
