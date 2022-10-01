@@ -37,4 +37,3 @@ shape = SubResource( 1 )
 
 [connection signal="timeUpdate" from="." to="CanvasLayer/Gui" method="_on_Node2D_timeUpdate"]
 [connection signal="timeout" from="LevelSwitchTimer" to="." method="_on_LevelSwitchTimer_timeout"]
-[connection signal="timeout" from="LevelSwitchTimer" to="CanvasLayer/Gui" method="_on_LevelSwitchTimer_timeout"]
