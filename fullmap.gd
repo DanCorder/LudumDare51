@@ -23,10 +23,10 @@ func _on_LevelSwitchTimer_timeout():
 		if (happyLand):
 			$SadCamera.make_current()
 			happyLand = false
-			$Ball.global_position.y += mapOffset
+			$Player.global_position.y += mapOffset
 		else:
 			$HappyCamera.make_current()
 			happyLand = true
-			$Ball.global_position.y -= mapOffset
+			$Player.global_position.y -= mapOffset
 	
 	emit_signal("timeUpdate", secondsBetweenSwitching - secondsOnCurrentLevel)
