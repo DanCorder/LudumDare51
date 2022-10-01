@@ -22,10 +22,14 @@ func _on_LevelSwitchTimer_timeout():
 		secondsOnCurrentLevel = 0
 		if (happyLand):
 			$SadCamera.make_current()
+			$SadMusic.play($HappyMusic.get_playback_position())
+			$HappyMusic.stop()
 			happyLand = false
 			$Player.global_position.y += mapOffset
 		else:
 			$HappyCamera.make_current()
+			$HappyMusic.play($SadMusic.get_playback_position())
+			$SadMusic.stop()
 			happyLand = true
 			$Player.global_position.y -= mapOffset
 	
