@@ -1,8 +1,8 @@
 extends Node2D
 
 const secondsBetweenSwitching = 10
-const tileSize = 64
-const mapOffset = 11 * tileSize
+const tileSize = 32
+const mapOffset = 22 * tileSize
 
 signal timeUpdate(timeRemaining)
 
