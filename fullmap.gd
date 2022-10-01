@@ -13,7 +13,8 @@ var happyLand = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$LevelSwitchTimer.start()
-	$HappyCamera.make_current()
+	$Player/Ghost.global_position.y += mapOffset
+	get_parent().get_child(0).make_current()
 
 
 func _on_LevelSwitchTimer_timeout():
@@ -21,16 +22,18 @@ func _on_LevelSwitchTimer_timeout():
 	if (secondsOnCurrentLevel >= secondsBetweenSwitching):
 		secondsOnCurrentLevel = 0
 		if (happyLand):
-			$SadCamera.make_current()
 			$SadMusic.play($HappyMusic.get_playback_position())
 			$HappyMusic.stop()
+			get_parent().get_child(1).make_current()
 			happyLand = false
 			$Player.global_position.y += mapOffset
+			$Player/Ghost.global_position.y -= 2 * mapOffset
 		else:
-			$HappyCamera.make_current()
 			$HappyMusic.play($SadMusic.get_playback_position())
 			$SadMusic.stop()
+			get_parent().get_child(0).make_current()
 			happyLand = true
 			$Player.global_position.y -= mapOffset
+			$Player/Ghost.global_position.y += 2 * mapOffset
 	
 	emit_signal("timeUpdate", secondsBetweenSwitching - secondsOnCurrentLevel)
