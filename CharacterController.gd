@@ -90,10 +90,14 @@ func _process(delta):
 func to_angel():
 	walk_animation = "right-angel"
 	jump_animation = "jump-angel"
+	$Area2D/AnimatedSprite.play(jump_animation)
+	$Area2D/AnimatedSprite.stop()
 
 func to_devil():
 	walk_animation = "right-devil"
 	jump_animation = "jump-devil"
+	$Area2D/AnimatedSprite.play(jump_animation)
+	$Area2D/AnimatedSprite.stop()
 
 func handle_falling(fast_fall, hyper_fall, delta):
 	var applied_gravity = GRAVITY;
