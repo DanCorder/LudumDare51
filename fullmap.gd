@@ -15,6 +15,7 @@ func _ready():
 	secondsOnCurrentLevel = 0
 	
 	$LevelSwitchTimer.start()
+	$CanvasLayer/Gui._ready()
 	$Level/Player/Ghost.global_position.y += mapOffset
 	get_parent().get_child(0).make_current()
 
