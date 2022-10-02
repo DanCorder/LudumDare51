@@ -26,7 +26,7 @@ var collision_shape;
 
 func _ready():
 	collision_shape = get_child(0).get_child(0).shape;
-	collidable_container = get_parent().get_node("Tilemaps");
+	collidable_container = get_parent().get_node("collideableTiles");
 	tile_shape = collidable_container.shape_owner_get_shape(0, 0);
 
 func is_colliding_with_collidable():
