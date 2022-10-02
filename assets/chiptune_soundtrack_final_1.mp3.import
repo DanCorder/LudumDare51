@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/chiptune_soundtrack_final_1.mp3-1dd209d4e8a276089cde7628ae1fcf4d.mp3str"
+
+[deps]
+
+source_file="res://assets/chiptune_soundtrack_final_1.mp3"
+dest_files=[ "res://.import/chiptune_soundtrack_final_1.mp3-1dd209d4e8a276089cde7628ae1fcf4d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
