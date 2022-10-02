@@ -71,6 +71,11 @@ func _process(delta):
 	if !grounded:
 		handle_falling(!Input.is_action_pressed("jump"), Input.is_action_pressed("move_down"), delta);
 
+	if velocity.y != 0:
+		$Area2D/AnimatedSprite.animation = "jump"
+	elif velocity.x != 0:
+		$Area2D/AnimatedSprite.animation = "right"
+		$Area2D/AnimatedSprite.flip_h = velocity.x < 0
 
 	# Move player
 	update();
