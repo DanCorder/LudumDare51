@@ -38,14 +38,14 @@ func is_colliding_with_collidable():
 	return false;
 
 func is_grounded():
+	if coyote_timer > 0.0:
+		return true;
+		
 	for tilemap in collidable_container.get_children():
 		for tile_pos in tilemap.get_used_cells():
 			if collision_shape.collide_with_motion(transform, Vector2.DOWN, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size), Vector2.ZERO):
 				coyote_timer = COYOTE_BUFFER_DURATION;
 				return true
-
-	if coyote_timer > 0.0:
-		return true;
 	
 	return false
 		
