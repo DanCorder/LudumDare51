@@ -2,9 +2,9 @@
 
 [ext_resource path="res://level1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameUi.tscn" type="PackedScene" id=2]
-[ext_resource path="res://chiptune_fulldemo_1.mp3" type="AudioStream" id=3]
+[ext_resource path="res://assets/rock_soundtrack_final_1.mp3" type="AudioStream" id=3]
 [ext_resource path="res://fullmap.gd" type="Script" id=4]
-[ext_resource path="res://10seconds_song1_demo2_rock.mp3" type="AudioStream" id=7]
+[ext_resource path="res://assets/chiptune_soundtrack_final_1.mp3" type="AudioStream" id=7]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 4 )
@@ -18,14 +18,13 @@ script = ExtResource( 4 )
 [node name="Gui" parent="CanvasLayer" instance=ExtResource( 2 )]
 
 [node name="HappyMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource( 7 )
 volume_db = -10.0
 autoplay = true
 
 [node name="SadMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource( 3 )
 volume_db = -10.0
-autoplay = true
 
 [connection signal="timeUpdate" from="." to="CanvasLayer/Gui" method="_on_Node2D_timeUpdate"]
 [connection signal="timeout" from="LevelSwitchTimer" to="." method="_on_LevelSwitchTimer_timeout"]
