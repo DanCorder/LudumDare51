@@ -1,17 +1,15 @@
 extends Area2D
 
-export var platform_coords : Array;
-export var origin_tilemap_name : String;
+export var leftmost_cell_coords : Vector2;
+export var number_of_cells : int;
 export var origin_tiles_index: int;
-export var destination_tilemap_name : String;
 export var destination_tiles_index: int;
 export var teleportation_vector : Vector2;
 export var cell_height_pixels :  int;
 export var can_teleport_only_once : bool;
 export var also_teleport_switch : bool;
 
-var origin_tilemap : TileMap;
-var destination_tilemap : TileMap;
+var tilemap : TileMap;
 var is_at_origin_tilemap : bool;
 var switch_teleportation_vector : Vector2;
 
@@ -19,8 +17,7 @@ var SWITCH_OFF_TEXTURE = preload("res://switch_off.png");
 
 
 func _ready():
-	origin_tilemap = get_sibling_node(origin_tilemap_name);
-	destination_tilemap = get_sibling_node(destination_tilemap_name);
+	tilemap = get_sibling_node("collideableTiles").get_node("TileMap");
 	is_at_origin_tilemap = true;
 	switch_teleportation_vector = cell_height_pixels * teleportation_vector;
 	
@@ -30,7 +27,7 @@ func _process(_delta):
 		teleport_platform();
 		if (also_teleport_switch):
 			teleport_switch();
-		update_tilemaps_collision_area();
+		update_tilemap_collision_area();
 		update_platform_location_tracker();
 		update_switch_ui();
 
@@ -40,9 +37,8 @@ func is_allowed_to_teleport():
 func get_sibling_node(sibling_name):
 	return get_parent().get_node(sibling_name);
 
-func update_tilemaps_collision_area():
-	origin_tilemap.update_dirty_quadrants();
-	destination_tilemap.update_dirty_quadrants();
+func update_tilemap_collision_area():
+	tilemap.update_dirty_quadrants();
 	
 func update_switch_ui():
 	if (!is_allowed_to_teleport()):
@@ -52,8 +48,12 @@ func update_platform_location_tracker():
 	is_at_origin_tilemap = !is_at_origin_tilemap;
 
 func teleport_platform():
-	for cell in platform_coords:
-		teleport_cell(cell);
+	for cell_index in number_of_cells:
+		var cell_coords = get_platform_cell_coords_by_index(cell_index);
+		teleport_cell(cell_coords);
+
+func get_platform_cell_coords_by_index(index):
+	return leftmost_cell_coords + Vector2(index,0);
 
 func teleport_switch():
 	if (is_at_origin_tilemap):
@@ -74,16 +74,16 @@ func teleport_cell(cell):
 		teleport_cell_to_origin(cell);
 	
 func teleport_cell_to_destination(cell):
-	delete_cell_from_tilemap(cell, origin_tilemap);
-	add_cell_to_tilemap(cell, destination_tilemap, destination_tiles_index, teleportation_vector);
+	delete_cell(cell);
+	add_cell(cell, destination_tiles_index, teleportation_vector);
 	
 func teleport_cell_to_origin(cell):
-	add_cell_to_tilemap(cell, origin_tilemap, origin_tiles_index);
-	delete_cell_from_tilemap(cell, destination_tilemap, teleportation_vector);
+	add_cell(cell, origin_tiles_index);
+	delete_cell(cell, teleportation_vector);
 
-func delete_cell_from_tilemap(cell, tilemap, offset_vector = Vector2(0,0)):
+func delete_cell(cell, offset_vector = Vector2(0,0)):
 	tilemap.set_cell(cell.x + offset_vector.x, cell.y + offset_vector.y, -1);
 	
-func add_cell_to_tilemap(cell, tilemap, tile_index, offset_vector = Vector2(0,0)):
+func add_cell(cell, tile_index, offset_vector = Vector2(0,0)):
 	tilemap.set_cell(cell.x + offset_vector.x, cell.y + offset_vector.y, tile_index);
 	
