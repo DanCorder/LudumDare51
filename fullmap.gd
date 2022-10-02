@@ -1,8 +1,8 @@
 extends Node2D
 
 const secondsBetweenSwitching = 10
-const tileSize = 64
-const mapOffset = 11 * tileSize
+const tileSize = 16
+const mapOffset = 44 * tileSize
 
 signal timeUpdate(timeRemaining)
 
@@ -16,7 +16,7 @@ func _ready():
 	
 	$LevelSwitchTimer.start()
 	$CanvasLayer/Gui._ready()
-	$Level/Player/Ghost.global_position.y += mapOffset
+	$Level/playerCharacter/Ghost.global_position.y += mapOffset
 	get_parent().get_child(0).make_current()
 
 func change_level_to(level):
@@ -36,14 +36,14 @@ func _on_LevelSwitchTimer_timeout():
 			$HappyMusic.stop()
 			get_parent().get_child(1).make_current()
 			happyLand = false
-			$Level/Player.global_position.y += mapOffset
-			$Level/Player/Ghost.global_position.y -= 2 * mapOffset
+			$Level/playerCharacter.global_position.y += mapOffset
+			$Level/playerCharacter/Ghost.global_position.y -= 2 * mapOffset
 		else:
 			$HappyMusic.play($SadMusic.get_playback_position())
 			$SadMusic.stop()
 			get_parent().get_child(0).make_current()
 			happyLand = true
-			$Level/Player.global_position.y -= mapOffset
-			$Level/Player/Ghost.global_position.y += 2 * mapOffset
+			$Level/playerCharacter.global_position.y -= mapOffset
+			$Level/playerCharacter/Ghost.global_position.y += 2 * mapOffset
 	
 	emit_signal("timeUpdate", secondsBetweenSwitching - secondsOnCurrentLevel)
