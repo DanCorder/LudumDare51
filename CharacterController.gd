@@ -87,6 +87,14 @@ func _process(delta):
 	move_integer_x(velocity.x * delta);
 	move_integer_y(velocity.y * delta);
 
+func to_angel():
+	walk_animation = "right-angel"
+	jump_animation = "jump-angel"
+
+func to_devil():
+	walk_animation = "right-devil"
+	jump_animation = "jump-devil"
+
 func handle_falling(fast_fall, hyper_fall, delta):
 	var applied_gravity = GRAVITY;
 	if velocity.y > 0:
