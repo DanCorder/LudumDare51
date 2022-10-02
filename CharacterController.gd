@@ -7,9 +7,9 @@ const HYPER_FALL_MULTIPLIER = 1.25; # Holding down
 const SHORT_HOP_MULTIPLIER = 0.7;
 const MAX_FALL_SPEED = 1500.0;
 
-const JUMP_HEIGHT = 200.0;
+const JUMP_HEIGHT = 100.0;
 const JUMP_VELOCITY = -sqrt(2.0 * GRAVITY * JUMP_HEIGHT);
-const RUN_ACCELERATION = 20000
+const RUN_ACCELERATION = 8000
 const WALK_SPEED = 300.0;
 const JUMP_BUFFER_DURATION = 0.1;
 const COYOTE_BUFFER_DURATION = 0.05;
@@ -24,13 +24,26 @@ var tile_shape;
 var collidable_container;
 var collision_shape;
 
+var tilemaps = [];
+
 func _ready():
 	collision_shape = get_child(0).get_child(0).shape;
 	collidable_container = get_parent().get_node("collideableTiles");
 	tile_shape = collidable_container.shape_owner_get_shape(0, 0);
+	tilemaps = get_tilemap_children(collidable_container)
+
+func get_tilemap_children(parent_node):
+	var children = parent_node.get_children();
+	var tilemap_children = [];
+	
+	for child in children:
+		if (child is TileMap):
+			tilemap_children.append(child);
+			
+	return tilemap_children;
 
 func is_colliding_with_collidable():
-	for tilemap in collidable_container.get_children():
+	for tilemap in tilemaps:
 		for tile_pos in tilemap.get_used_cells():
 			if collision_shape.collide(transform, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size)):
 				return true;
@@ -41,7 +54,7 @@ func is_grounded():
 	if coyote_timer > 0.0:
 		return true;
 		
-	for tilemap in collidable_container.get_children():
+	for tilemap in tilemaps:
 		for tile_pos in tilemap.get_used_cells():
 			if collision_shape.collide_with_motion(transform, Vector2.DOWN, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size), Vector2.ZERO):
 				coyote_timer = COYOTE_BUFFER_DURATION;
