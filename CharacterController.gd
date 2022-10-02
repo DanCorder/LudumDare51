@@ -41,26 +41,6 @@ func get_tilemap_children(parent_node):
 			tilemap_children.append(child);
 			
 	return tilemap_children;
-
-func is_colliding_with_collidable():
-	for tilemap in tilemaps:
-		for tile_pos in tilemap.get_used_cells():
-			if collision_shape.collide(transform, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size)):
-				return true;
-
-	return false;
-
-func is_grounded():
-	if coyote_timer > 0.0:
-		return true;
-		
-	for tilemap in tilemaps:
-		for tile_pos in tilemap.get_used_cells():
-			if collision_shape.collide_with_motion(transform, Vector2.DOWN, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size), Vector2.ZERO):
-				coyote_timer = COYOTE_BUFFER_DURATION;
-				return true
-	
-	return false
 		
 func _process(delta):
 	# Set velocity
@@ -119,7 +99,7 @@ func move_integer_x(delta_x):
 		global_position.x += step;
 		move -= step;
 
-		if is_colliding_with_collidable():
+		if is_colliding_with_collidable() && !backwards_x_step_is_colliding_with_collidable(step):
 			global_position.x -= step;
 			velocity.x = 0
 			break;
@@ -134,7 +114,44 @@ func move_integer_y(delta_y):
 		global_position.y += step;
 		move -= step;
 
-		if is_colliding_with_collidable():
+		if is_colliding_with_collidable() && !backwards_y_step_is_colliding_with_collidable(step):
 			global_position.y -= step;
 			velocity.y = 0
 			break;
+
+func is_colliding_with_collidable():
+	for tilemap in tilemaps:
+		for tile_pos in tilemap.get_used_cells():
+			if collision_shape.collide(transform, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size)):
+				return true;
+	return false;
+	
+func backwards_y_step_is_colliding_with_collidable(y_step):
+	return backwards_step_is_colliding_with_collidable(Vector2(0, y_step))
+
+func backwards_x_step_is_colliding_with_collidable(x_step):
+	return backwards_step_is_colliding_with_collidable(Vector2(x_step, 0))
+	
+func backwards_step_is_colliding_with_collidable(step):
+	add_backwards_step(step);
+	var is_colliding = is_colliding_with_collidable();
+	undo_backwards_step(step);
+	return is_colliding;
+	
+func add_backwards_step(step):
+	global_position.x -= step.x;
+	global_position.y -= step.y;
+	
+func undo_backwards_step(step):
+	add_backwards_step(-step);
+
+func is_grounded():
+	if coyote_timer > 0.0:
+		return true;
+		
+	for tilemap in tilemaps:
+		for tile_pos in tilemap.get_used_cells():
+			if collision_shape.collide_with_motion(transform, Vector2.DOWN, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size), Vector2.ZERO):
+				coyote_timer = COYOTE_BUFFER_DURATION;
+				return true
+	return false
