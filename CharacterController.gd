@@ -27,10 +27,12 @@ var collision_shape;
 var walk_animation = "right-angel"
 var jump_animation = "jump-angel"
 
+signal playerDied
+
 var tilemaps = [];
 
 func _ready():
-	collision_shape = get_child(0).get_child(0).shape;
+	collision_shape = $CollisionShape2D.shape;
 	collidable_container = get_parent().get_node("collideableTiles");
 	tile_shape = collidable_container.shape_owner_get_shape(0, 0);
 	tilemaps = get_tilemap_children(collidable_container)
@@ -75,12 +77,12 @@ func _process(delta):
 		handle_falling(!Input.is_action_pressed("jump"), Input.is_action_pressed("move_down"), delta);
 
 	if velocity.y != 0:
-		$Area2D/AnimatedSprite.play(jump_animation)
+		$AnimatedSprite.play(jump_animation)
 	elif velocity.x != 0:
-		$Area2D/AnimatedSprite.play(walk_animation)
-		$Area2D/AnimatedSprite.flip_h = velocity.x < 0
+		$AnimatedSprite.play(walk_animation)
+		$AnimatedSprite.flip_h = velocity.x < 0
 	elif velocity.x == 0:
-		$Area2D/AnimatedSprite.stop()
+		$AnimatedSprite.stop()
 
 	# Move player
 	update();
@@ -90,14 +92,18 @@ func _process(delta):
 func to_angel():
 	walk_animation = "right-angel"
 	jump_animation = "jump-angel"
-	$Area2D/AnimatedSprite.play(jump_animation)
-	$Area2D/AnimatedSprite.stop()
+	$AnimatedSprite.play(jump_animation)
+	$AnimatedSprite.stop()
 
 func to_devil():
 	walk_animation = "right-devil"
 	jump_animation = "jump-devil"
-	$Area2D/AnimatedSprite.play(jump_animation)
-	$Area2D/AnimatedSprite.stop()
+	$AnimatedSprite.play(jump_animation)
+	$AnimatedSprite.stop()
+
+func kill():
+	print_debug("dead!")
+	emit_signal("playerDied")
 
 func handle_falling(fast_fall, hyper_fall, delta):
 	var applied_gravity = GRAVITY;

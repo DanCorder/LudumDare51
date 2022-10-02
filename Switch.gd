@@ -96,4 +96,4 @@ func _on_Switch_area_exited(area):
 		PLAYER_IS_NEAR_SWITCH = false;
 		
 func areaIsPlayer(area):
-	return area == get_parent().get_node("playerCharacter").get_node("Area2D");
+	return area == get_parent().get_node("playerCharacter");
