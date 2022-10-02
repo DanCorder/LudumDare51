@@ -16,6 +16,8 @@ render_target_update_mode = 3
 [node name="Cam" type="Camera2D" parent="ViewportContainer/Viewport"]
 current = true
 
+[node name="PreviewCam" type="Camera2D" parent="ViewportContainer/Viewport"]
+
 [node name="World" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
 
 [node name="ViewportContainer2" type="ViewportContainer" parent="."]
@@ -28,6 +30,10 @@ rect_scale = Vector2( 0.25, 0.25 )
 size = Vector2( 1024, 576 )
 handle_input_locally = false
 render_target_update_mode = 3
+
+[node name="Cam" type="Camera2D" parent="ViewportContainer2/Viewport"]
+position = Vector2( 768, 0 )
+scale = Vector2( 0.25, 0.25 )
 
 [node name="PreviewCam" type="Camera2D" parent="ViewportContainer2/Viewport"]
 current = true
