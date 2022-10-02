@@ -24,6 +24,9 @@ var tile_shape;
 var collidable_container;
 var collision_shape;
 
+var walk_animation = "right-angel"
+var jump_animation = "jump-angel"
+
 var tilemaps = [];
 
 func _ready():
@@ -72,10 +75,12 @@ func _process(delta):
 		handle_falling(!Input.is_action_pressed("jump"), Input.is_action_pressed("move_down"), delta);
 
 	if velocity.y != 0:
-		$Area2D/AnimatedSprite.animation = "jump-angel"
+		$Area2D/AnimatedSprite.play(jump_animation)
 	elif velocity.x != 0:
-		$Area2D/AnimatedSprite.animation = "right-angel"
+		$Area2D/AnimatedSprite.play(walk_animation)
 		$Area2D/AnimatedSprite.flip_h = velocity.x < 0
+	elif velocity.x == 0:
+		$Area2D/AnimatedSprite.stop()
 
 	# Move player
 	update();
