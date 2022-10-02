@@ -1,8 +1,8 @@
 extends Node2D
 
 const secondsBetweenSwitching = 10
-const tileSize = 64
-const mapOffset = 11 * tileSize
+const tileSize = 16
+const mapOffset = 44 * tileSize
 
 signal timeUpdate(timeRemaining)
 
@@ -16,7 +16,7 @@ func _ready():
 	
 	$LevelSwitchTimer.start()
 	$CanvasLayer/Gui._ready()
-	$Level/Player/Ghost.global_position.y += mapOffset
+	$Level/playerCharacter/Ghost.global_position.y += mapOffset
 	get_parent().get_child(0).make_current()
 
 func change_level_to(level):
