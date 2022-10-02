@@ -22,15 +22,17 @@ var coyote_timer = 0.0;
 
 var tile_shape;
 var collidable_container;
+var collision_shape;
 
 func _ready():
-	collidable_container = get_parent().get_node("level1");
+	collision_shape = get_child(0).get_child(0).shape;
+	collidable_container = get_parent().get_node("Tilemaps");
 	tile_shape = collidable_container.shape_owner_get_shape(0, 0);
 
 func is_colliding_with_collidable():
 	for tilemap in collidable_container.get_children():
 		for tile_pos in tilemap.get_used_cells():
-			if get_child(0).shape.collide(transform, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size)):
+			if collision_shape.collide(transform, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size)):
 				return true;
 
 	return false;
@@ -38,7 +40,7 @@ func is_colliding_with_collidable():
 func is_grounded():
 	for tilemap in collidable_container.get_children():
 		for tile_pos in tilemap.get_used_cells():
-			if get_child(0).shape.collide_with_motion(transform, Vector2.DOWN, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size), Vector2.ZERO):
+			if collision_shape.collide_with_motion(transform, Vector2.DOWN, tile_shape, Transform2D(0.0, tile_pos * tilemap.cell_size), Vector2.ZERO):
 				coyote_timer = COYOTE_BUFFER_DURATION;
 				return true
 
