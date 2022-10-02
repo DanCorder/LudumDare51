@@ -4,7 +4,7 @@
 [ext_resource path="res://CharacterController.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 28, 28 )
+extents = Vector2( 8, 15.5 )
 
 [node name="playerCharacter" type="Node2D"]
 script = ExtResource( 2 )
@@ -12,14 +12,15 @@ script = ExtResource( 2 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, 0.5 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 9.53674e-07, -9.53674e-07 )
-scale = Vector2( 0.9375, 0.9375 )
+position = Vector2( -9.53674e-07, 0.5 )
+scale = Vector2( 0.25, 0.484375 )
 texture = ExtResource( 1 )
 
 [node name="Ghost" type="Sprite" parent="."]
-position = Vector2( 2.20537e-06, -2.02656e-06 )
-scale = Vector2( 0.9375, 0.9375 )
+position = Vector2( -2.86102e-06, 0.499998 )
+scale = Vector2( 0.25, 0.484375 )
 texture = ExtResource( 1 )
