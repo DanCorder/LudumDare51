@@ -6,15 +6,25 @@ const mapOffset = 11 * tileSize
 
 signal timeUpdate(timeRemaining)
 
-var secondsOnCurrentLevel = 0
-var happyLand = true
+var secondsOnCurrentLevel
+var happyLand
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	happyLand = true
+	secondsOnCurrentLevel = 0
+	
 	$LevelSwitchTimer.start()
 	$Level/Player/Ghost.global_position.y += mapOffset
 	get_parent().get_child(0).make_current()
 
+func change_level_to(level):
+	remove_child($Level)
+	var new_level = load(level).instance()
+	new_level.set_name("Level");
+	add_child(new_level)
+	
+	_ready();
 
 func _on_LevelSwitchTimer_timeout():
 	secondsOnCurrentLevel += 1
