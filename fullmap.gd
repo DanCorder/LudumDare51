@@ -2,7 +2,7 @@ extends Node2D
 
 const secondsBetweenSwitching = 10
 const tileSize = 16
-const mapOffset = 44 * tileSize
+const mapOffset = 36 * tileSize
 
 signal timeUpdate(timeRemaining)
 
@@ -30,6 +30,12 @@ func change_level_to(level):
 	add_child(new_level)
 	
 	_ready();
+	
+func switch_camera_center():
+	var temp_transform = $Level/MainCameraCenter.global_position
+	$Level/MainCameraCenter.global_position = $Level/PreviewCameraCenter.global_position
+	$Level/PreviewCameraCenter.global_position = temp_transform
+	
 
 func _on_LevelSwitchTimer_timeout():
 	secondsOnCurrentLevel += 1
@@ -38,14 +44,14 @@ func _on_LevelSwitchTimer_timeout():
 		if (happyLand):
 			$SadMusic.play($HappyMusic.get_playback_position())
 			$HappyMusic.stop()
-			get_parent().get_child(1).make_current()
+			switch_camera_center()
 			happyLand = false
 			$Level/playerCharacter.global_position.y += mapOffset
 			$Level/playerCharacter/Ghost.global_position.y -= 2 * mapOffset
 		else:
 			$HappyMusic.play($SadMusic.get_playback_position())
 			$SadMusic.stop()
-			get_parent().get_child(0).make_current()
+			switch_camera_center()
 			happyLand = true
 			$Level/playerCharacter.global_position.y -= mapOffset
 			$Level/playerCharacter/Ghost.global_position.y += 2 * mapOffset
