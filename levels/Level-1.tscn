@@ -611,7 +611,7 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 [sub_resource type="RectangleShape2D" id=39]
 extents = Vector2( 33, 33 )
 
-[node name="level2" type="Node2D"]
+[node name="Level" type="Node2D"]
 script = ExtResource( 3 )
 next_level = "res://levels/Level-2.tscn"
 
