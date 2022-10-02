@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/happyBackground.png-b7c7904a01c434b90fbb140a87441379.stex"
+path="res://.import/devil-walk1.png-ccba03b0489aa3a99de23de0802ac5e4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://happyBackground.png"
-dest_files=[ "res://.import/happyBackground.png-b7c7904a01c434b90fbb140a87441379.stex" ]
+source_file="res://assets/character/devil-walk1.png"
+dest_files=[ "res://.import/devil-walk1.png-ccba03b0489aa3a99de23de0802ac5e4.stex" ]
 
 [params]
 

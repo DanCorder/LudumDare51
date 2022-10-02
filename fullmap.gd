@@ -47,6 +47,7 @@ func _on_LevelSwitchTimer_timeout():
 			switch_camera_center()
 			happyLand = false
 			$Level/playerCharacter.global_position.y += mapOffset
+			$Level/playerCharacter.to_devil()
 			$Level/playerCharacter/Ghost.global_position.y -= 2 * mapOffset
 		else:
 			$HappyMusic.play($SadMusic.get_playback_position())
@@ -54,6 +55,7 @@ func _on_LevelSwitchTimer_timeout():
 			switch_camera_center()
 			happyLand = true
 			$Level/playerCharacter.global_position.y -= mapOffset
+			$Level/playerCharacter.to_angel()
 			$Level/playerCharacter/Ghost.global_position.y += 2 * mapOffset
 	
 	emit_signal("timeUpdate", secondsBetweenSwitching - secondsOnCurrentLevel)

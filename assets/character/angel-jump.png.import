@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/happyBackground.png-b7c7904a01c434b90fbb140a87441379.stex"
+path="res://.import/angel-jump.png-a149f53e6c08457bba2f90641f28bb52.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://happyBackground.png"
-dest_files=[ "res://.import/happyBackground.png-b7c7904a01c434b90fbb140a87441379.stex" ]
+source_file="res://assets/character/angel-jump.png"
+dest_files=[ "res://.import/angel-jump.png-a149f53e6c08457bba2f90641f28bb52.stex" ]
 
 [params]
 
