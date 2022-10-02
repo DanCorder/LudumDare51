@@ -14,7 +14,7 @@ var is_at_origin_tilemap : bool;
 var switch_teleportation_vector : Vector2;
 
 var SWITCH_OFF_TEXTURE = preload("res://switch_off.png");
-
+var PLAYER_IS_NEAR_SWITCH = false;
 
 func _ready():
 	tilemap = get_sibling_node("collideableTiles").get_node("TileMap");
@@ -22,8 +22,8 @@ func _ready():
 	switch_teleportation_vector = cell_height_pixels * teleportation_vector;
 	
 func _process(_delta):
-	var jump_pressed = Input.is_action_just_pressed("jump")
-	if (jump_pressed && is_allowed_to_teleport()):
+	var select_key_pressed = Input.is_action_just_pressed("ui_select")
+	if (select_key_pressed && is_allowed_to_teleport() && PLAYER_IS_NEAR_SWITCH):
 		teleport_platform();
 		if (also_teleport_switch):
 			teleport_switch();
@@ -86,4 +86,14 @@ func delete_cell(cell, offset_vector = Vector2(0,0)):
 	
 func add_cell(cell, tile_index, offset_vector = Vector2(0,0)):
 	tilemap.set_cell(cell.x + offset_vector.x, cell.y + offset_vector.y, tile_index);
-	
+
+func _on_Switch_area_entered(area):
+	if areaIsPlayer(area):
+		PLAYER_IS_NEAR_SWITCH = true;
+
+func _on_Switch_area_exited(area):
+	if areaIsPlayer(area):
+		PLAYER_IS_NEAR_SWITCH = false;
+		
+func areaIsPlayer(area):
+	return area == get_parent().get_node("playerCharacter").get_node("Area2D");
