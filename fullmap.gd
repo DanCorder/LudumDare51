@@ -14,6 +14,9 @@ func _ready():
 	happyLand = true
 	secondsOnCurrentLevel = 0
 	
+	$HappyMusic.play($SadMusic.get_playback_position())
+	$SadMusic.stop()
+	
 	$LevelSwitchTimer.start()
 	$CanvasLayer/Gui._ready()
 	$Level/playerCharacter/Ghost.global_position.y += mapOffset
