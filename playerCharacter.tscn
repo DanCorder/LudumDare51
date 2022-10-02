@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
+[ext_resource path="res://assets/character/devil-walk2.png" type="Texture" id=1]
 [ext_resource path="res://CharacterController.gd" type="Script" id=2]
 [ext_resource path="res://assets/character/angel-walk1.png" type="Texture" id=3]
 [ext_resource path="res://assets/character/angel-walk2.png" type="Texture" id=4]
 [ext_resource path="res://assets/character/angel-jump.png" type="Texture" id=5]
+[ext_resource path="res://assets/character/devil-jump.png" type="Texture" id=6]
+[ext_resource path="res://assets/character/devil-walk1.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 15.5 )
@@ -12,12 +15,22 @@ extents = Vector2( 8, 15.5 )
 animations = [ {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "jump",
+"name": "jump-angel",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "jump-devil",
 "speed": 1.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "right",
+"name": "right-angel",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "right-devil",
 "speed": 1.0
 } ]
 
@@ -32,7 +45,7 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Area2D"]
 z_index = 1
 frames = SubResource( 2 )
-animation = "jump"
+animation = "right-devil"
 
 [node name="Ghost" type="Sprite" parent="."]
 z_index = 1
