@@ -11,11 +11,12 @@ var happyLand
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if !happyLand:
+		$HappyMusic.play($SadMusic.get_playback_position())
+		$SadMusic.stop()
+
 	happyLand = true
 	secondsOnCurrentLevel = 0
-	
-	$HappyMusic.play($SadMusic.get_playback_position())
-	$SadMusic.stop()
 	
 	$LevelSwitchTimer.start()
 	$CanvasLayer/Gui._ready()
