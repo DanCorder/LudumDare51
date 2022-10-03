@@ -14,8 +14,8 @@ var tilemap : TileMap;
 var is_at_origin_tilemap : bool;
 var switch_teleportation_vector : Vector2;
 
-var SWITCH_ON_TEXTURE = preload("res://switch_on.png");
-var SWITCH_OFF_TEXTURE = preload("res://switch_off.png");
+var SWITCH_ON_TEXTURE = preload("res://assets/switch/switch_on.png");
+var SWITCH_OFF_TEXTURE = preload("res://assets/switch/switch_off.png");
 var PLAYER_IS_NEAR_SWITCH = false;
 
 func _ready():
