@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Help.gd" type="Script" id=1]
+[ext_resource path="res://Golden Age Shad.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/buttons/back_button.png" type="Texture" id=3]
+[ext_resource path="res://assets/buttons/back_button_hover.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
 
 [node name="Help" type="Control"]
 anchor_right = 1.0
@@ -28,22 +34,23 @@ Curabitur elementum elit non turpis consequat, a mollis elit imperdiet. Vestibul
 "
 
 [node name="Title" type="Label" parent="."]
-margin_left = 418.0
-margin_top = 95.0
-margin_right = 510.0
-margin_bottom = 109.0
-rect_scale = Vector2( 2.1083, 2.34146 )
-text = "Level Switcher"
+margin_left = 246.0
+margin_top = 69.0
+margin_right = 488.0
+margin_bottom = 83.0
+rect_scale = Vector2( 2.17881, 2.01508 )
+custom_fonts/font = SubResource( 1 )
+text = "Schrodinger's Afterlife"
 
-[node name="BackButton" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -50.0
-margin_top = -66.0
-margin_right = 50.0
-margin_bottom = -46.0
-text = "Back"
+[node name="BackButton" type="TextureButton" parent="."]
+margin_left = 435.0
+margin_top = 478.0
+margin_right = 1511.0
+margin_bottom = 994.0
+rect_scale = Vector2( 0.110265, 0.110265 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_focused = ExtResource( 4 )
 
-[connection signal="pressed" from="BackButton" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
