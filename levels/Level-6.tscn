@@ -63,6 +63,7 @@ origin_tiles_index = 7
 destination_tiles_index = 7
 teleportation_vector = Vector2( 0, 36 )
 cell_height_pixels = 16
+also_teleport_switch = false
 
 [node name="Teleportable Platform" parent="." instance=ExtResource( 10 )]
 position = Vector2( 364, 100 )
