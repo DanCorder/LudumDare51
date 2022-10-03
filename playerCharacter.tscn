@@ -9,7 +9,7 @@
 [ext_resource path="res://assets/character/devil-walk1.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 15.5 )
+extents = Vector2( 6, 13.75 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -51,6 +51,7 @@ animations = [ {
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1.75 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
