@@ -40,10 +40,10 @@ custom_fonts/font = SubResource( 1 )
 text = "Schrodinger's Afterlife"
 
 [node name="BackButton" type="TextureButton" parent="."]
-margin_left = 674.0
-margin_top = 475.0
-margin_right = 1750.0
-margin_bottom = 991.0
+margin_left = 687.0
+margin_top = 490.0
+margin_right = 1763.0
+margin_bottom = 1006.0
 rect_scale = Vector2( 0.110265, 0.110265 )
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 4 )
@@ -57,15 +57,15 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -279.0
 margin_top = -219.0
-margin_right = 123.0
+margin_right = 210.0
 margin_bottom = 18.0
 custom_fonts/normal_font = SubResource( 2 )
-text = "[W] - jump
-[A] - move left
-[D] - move right
-[spacebar] - activate platform button
-[enter] - restart level
-[tab] - view alternate world"
+text = "[W] - jump - [Xbox A]
+[A] - move left - [Controller Left Stick]
+[D] - move right - [Controller Left Stick]
+[spacebar] - activate platform button - [Xbox B]
+[enter] - restart level - [Controller Start]
+[tab] - view alternate world - [Xbox LB]"
 fit_content_height = true
 scroll_active = false
 
