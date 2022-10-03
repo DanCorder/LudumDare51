@@ -14,6 +14,7 @@ var tilemap : TileMap;
 var is_at_origin_tilemap : bool;
 var switch_teleportation_vector : Vector2;
 
+var SWITCH_ON_TEXTURE = preload("res://switch_on.png");
 var SWITCH_OFF_TEXTURE = preload("res://switch_off.png");
 var PLAYER_IS_NEAR_SWITCH = false;
 
@@ -21,6 +22,7 @@ func _ready():
 	tilemap = get_sibling_node("collideableTiles").get_node("TileMap");
 	is_at_origin_tilemap = true;
 	switch_teleportation_vector = cell_height_pixels * teleportation_vector;
+	set_switch_ui_off();
 	if (trigger_mechanic_is_jump()):
 		hide_switch();
 	
@@ -60,8 +62,8 @@ func update_tilemap_collision_area():
 	
 func update_switch_ui():
 	if (!is_allowed_to_teleport()):
-		get_node("Switch").set_texture(SWITCH_OFF_TEXTURE);
-
+		hide_switch();
+		
 func update_platform_location_tracker():
 	is_at_origin_tilemap = !is_at_origin_tilemap;
 
@@ -108,10 +110,21 @@ func add_cell(cell, tile_index, offset_vector = Vector2(0,0)):
 func _on_Switch_area_entered(area):
 	if areaIsPlayer(area):
 		PLAYER_IS_NEAR_SWITCH = true;
+		if trigger_mechanic_is_switch() && is_allowed_to_teleport():
+			set_switch_ui_on();
 
 func _on_Switch_area_exited(area):
 	if areaIsPlayer(area):
 		PLAYER_IS_NEAR_SWITCH = false;
+		if trigger_mechanic_is_switch() && is_allowed_to_teleport():
+			set_switch_ui_off();
 		
 func areaIsPlayer(area):
 	return area == get_parent().get_node("playerCharacter");
+	
+func set_switch_ui_off():
+	get_node("Switch").set_texture(SWITCH_OFF_TEXTURE);
+	
+func set_switch_ui_on():
+	get_node("Switch").set_texture(SWITCH_ON_TEXTURE);
+
