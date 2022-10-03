@@ -22,6 +22,8 @@ func _ready():
 	tilemap = get_sibling_node("collideableTiles").get_node("TileMap");
 	is_at_origin_tilemap = true;
 	switch_teleportation_vector = cell_height_pixels * teleportation_vector;
+	$PlatformHighlight.scale = 16 * Vector2(number_of_cells, 1)
+	$PlatformHighlight.global_position = (leftmost_cell_coords + Vector2(number_of_cells, 1) / 2) * cell_height_pixels
 	set_switch_ui_off();
 	if (trigger_mechanic_is_jump()):
 		hide_switch();
@@ -110,15 +112,23 @@ func add_cell(cell, tile_index, offset_vector = Vector2(0,0)):
 func _on_Switch_area_entered(area):
 	if areaIsPlayer(area):
 		PLAYER_IS_NEAR_SWITCH = true;
+		showPlatformHints()
 		if trigger_mechanic_is_switch() && is_allowed_to_teleport():
 			set_switch_ui_on();
 
 func _on_Switch_area_exited(area):
 	if areaIsPlayer(area):
 		PLAYER_IS_NEAR_SWITCH = false;
+		hidePlatformHints()
 		if trigger_mechanic_is_switch() && is_allowed_to_teleport():
 			set_switch_ui_off();
-		
+			
+func showPlatformHints():
+	$PlatformHighlight.visible = true
+
+func hidePlatformHints():
+	$PlatformHighlight.visible = false
+
 func areaIsPlayer(area):
 	return area == get_parent().get_node("playerCharacter");
 	
