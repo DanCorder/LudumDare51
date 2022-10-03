@@ -41,5 +41,10 @@ autoplay = true
 stream = ExtResource( 3 )
 volume_db = -10.0
 
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="timeUpdate" from="." to="CanvasLayer/Gui" method="_on_Node2D_timeUpdate"]
 [connection signal="timeout" from="LevelSwitchTimer" to="." method="_on_LevelSwitchTimer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
