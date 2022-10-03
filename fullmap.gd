@@ -21,7 +21,7 @@ func _ready():
 
 	happyLand = true
 	secondsOnCurrentLevel = 0
-	
+
 	$LevelSwitchTimer.start()
 	$CanvasLayer/Gui._ready()
 	playerCharacter = $Level/playerCharacter
