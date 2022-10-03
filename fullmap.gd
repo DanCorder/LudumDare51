@@ -12,6 +12,7 @@ var currentLevel = "res://levels/Level-1.tscn"
 
 var secondsOnCurrentLevel
 var happyLand
+var DEATH_SCREEN_PATH = "res://DeathScreen.tscn";
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,7 +29,7 @@ func _ready():
 	playerCharacterGhost = $Level/playerCharacter/Ghost
 	playerCharacterGhost.global_position.y += mapOffset
 	playerCharacter.connect("playerDied", self, "_on_player_died")
-	get_parent().get_child(0).make_current()
+	get_parent().get_child(0).make_current();
 
 func change_level_to(level):
 	remove_child($Level)
@@ -44,7 +45,16 @@ func _input(event):
 		change_level_to(currentLevel)
 
 func _on_player_died():
-	change_level_to(currentLevel)
+	if(!get_node_or_null("DeathScreen")):
+		var deathScreenInstance = load(DEATH_SCREEN_PATH).instance();
+		deathScreenInstance.set_name("DeathScreen");
+		add_child(deathScreenInstance);
+		$DeathTimer.start();
+	
+func _on_DeathTimer_timeout():
+	if(get_node_or_null("DeathScreen")):
+		remove_child($DeathScreen);
+	change_level_to(currentLevel);
 	
 func switch_camera_center():
 	var temp_transform = $Level/MainCameraCenter.global_position
@@ -73,3 +83,6 @@ func _on_LevelSwitchTimer_timeout():
 			playerCharacterGhost.global_position.y += 2 * mapOffset
 	
 	emit_signal("timeUpdate", secondsBetweenSwitching - secondsOnCurrentLevel)
+
+
+

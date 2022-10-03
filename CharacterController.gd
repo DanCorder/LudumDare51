@@ -33,12 +33,15 @@ signal playerDied
 
 var tilemaps = [];
 
+var is_dead;
+
 func _ready():
 	collision_shape = $CollisionShape2D.shape;
 	collidable_container = get_parent().get_node("collideableTiles");
 	tile_shape = collidable_container.shape_owner_get_shape(0, 0);
 	tilemaps = get_tilemap_children(collidable_container)
 	to_angel()
+	is_dead = false;
 
 func get_tilemap_children(parent_node):
 	var children = parent_node.get_children();
@@ -51,46 +54,47 @@ func get_tilemap_children(parent_node):
 	return tilemap_children;
 		
 func _process(delta):
-	# Set velocity
-	var direction = sign(Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
-	var jump_pressed = Input.is_action_just_pressed("jump")
-	var jump_released = Input.is_action_just_released("jump")
-	var grounded = is_grounded();
+	if(!is_dead):
+		# Set velocity
+		var direction = sign(Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
+		var jump_pressed = Input.is_action_just_pressed("jump")
+		var jump_released = Input.is_action_just_released("jump")
+		var grounded = is_grounded();
 
-	coyote_timer = max(coyote_timer - delta, 0.0);
-	jump_buffered_timer = max(jump_buffered_timer - delta, 0.0);
-	if jump_pressed || jump_buffered:
-		if grounded && (jump_pressed || jump_buffered_timer > 0.0):
-			velocity.y = JUMP_VELOCITY;
+		coyote_timer = max(coyote_timer - delta, 0.0);
+		jump_buffered_timer = max(jump_buffered_timer - delta, 0.0);
+		if jump_pressed || jump_buffered:
+			if grounded && (jump_pressed || jump_buffered_timer > 0.0):
+				velocity.y = JUMP_VELOCITY;
 
-			jump_buffered = false;
-			jump_buffered_timer = 0.0;
-			coyote_timer = 0.0;
-		elif !jump_buffered:
-			jump_buffered = true;
-			jump_buffered_timer = JUMP_BUFFER_DURATION;
-	elif jump_released:
-		velocity.y *= SHORT_HOP_MULTIPLIER;
+				jump_buffered = false;
+				jump_buffered_timer = 0.0;
+				coyote_timer = 0.0;
+			elif !jump_buffered:
+				jump_buffered = true;
+				jump_buffered_timer = JUMP_BUFFER_DURATION;
+		elif jump_released:
+			velocity.y *= SHORT_HOP_MULTIPLIER;
 
-	if direction == 0: 
-		velocity.x = move_toward(velocity.x, WALK_SPEED * direction, RUN_ACCELERATION* 4 * delta)
-	else:
-		velocity.x = move_toward(velocity.x, WALK_SPEED * direction, RUN_ACCELERATION * delta)
-	if !grounded:
-		handle_falling(!Input.is_action_pressed("jump"), Input.is_action_pressed("move_down"), delta);
+		if direction == 0: 
+			velocity.x = move_toward(velocity.x, WALK_SPEED * direction, RUN_ACCELERATION* 4 * delta)
+		else:
+			velocity.x = move_toward(velocity.x, WALK_SPEED * direction, RUN_ACCELERATION * delta)
+		if !grounded:
+			handle_falling(!Input.is_action_pressed("jump"), Input.is_action_pressed("move_down"), delta);
 
-	if velocity.y != 0:
-		main_sprite.play(jump_animation)
-	elif velocity.x != 0:
-		main_sprite.play(walk_animation)
-		main_sprite.flip_h = velocity.x < 0
-	elif velocity.x == 0:
-		main_sprite.stop()
+		if velocity.y != 0:
+			main_sprite.play(jump_animation)
+		elif velocity.x != 0:
+			main_sprite.play(walk_animation)
+			main_sprite.flip_h = velocity.x < 0
+		elif velocity.x == 0:
+			main_sprite.stop()
 
-	# Move player
-	update();
-	move_integer_x(velocity.x * delta);
-	move_integer_y(velocity.y * delta);
+		# Move player
+		update();
+		move_integer_x(velocity.x * delta);
+		move_integer_y(velocity.y * delta);
 
 func to_angel():
 	walk_animation = "right-angel"
@@ -110,6 +114,11 @@ func to_devil():
 
 func kill():
 	emit_signal("playerDied")
+	is_dead = true;
+	$DeathTimer.start();
+
+func _on_DeathTimer_timeout():
+	is_dead = false;
 
 func handle_falling(fast_fall, hyper_fall, delta):
 	var applied_gravity = GRAVITY;
