@@ -39,6 +39,10 @@ func change_level_to(level):
 	
 	_ready();
 
+func _input(event):
+	if Input.is_action_just_pressed("restart_level"):
+		change_level_to(currentLevel)
+
 func _on_player_died():
 	change_level_to(currentLevel)
 	
