@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/fonts/Golden Age Shad.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Start screen.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/buttons/quit_button.png" type="Texture" id=7]
 [ext_resource path="res://assets/buttons/quit_button_hover.png" type="Texture" id=8]
 [ext_resource path="res://assets/buttons/help_button.png" type="Texture" id=9]
+[ext_resource path="res://endBackground.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 41
@@ -64,6 +65,12 @@ texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 8 )
 texture_hover = ExtResource( 8 )
 texture_focused = ExtResource( 8 )
+
+[node name="EndBackground" type="Sprite" parent="."]
+position = Vector2( 517, 289 )
+scale = Vector2( 0.936364, 0.82 )
+z_index = -1
+texture = ExtResource( 10 )
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="HelpButton" to="." method="_on_HelpButton_pressed"]
