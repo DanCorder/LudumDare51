@@ -9,7 +9,7 @@
 [ext_resource path="res://levels/MainCameraCenter.gd" type="Script" id=7]
 [ext_resource path="res://levels/PreviewCameraCenter.gd" type="Script" id=8]
 [ext_resource path="res://levels/collisionTileset.tres" type="TileSet" id=9]
-[ext_resource path="res://Switch.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Teleportable Platform.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=39]
 extents = Vector2( 33, 33 )
@@ -66,10 +66,11 @@ script = ExtResource( 7 )
 position = Vector2( 512, 864 )
 script = ExtResource( 8 )
 
-[node name="Switch" parent="." instance=ExtResource( 10 )]
+[node name="Teleportable Platform" parent="." instance=ExtResource( 10 )]
 position = Vector2( 532, 275 )
 leftmost_cell_coords = Vector2( 29, 20 )
 number_of_cells = 12
 destination_tiles_index = 3
 teleportation_vector = Vector2( 0, 34 )
 cell_height_pixels = 16
+teleport_on_jump = true

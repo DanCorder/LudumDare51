@@ -6,6 +6,7 @@ export var origin_tiles_index: int;
 export var destination_tiles_index: int;
 export var teleportation_vector : Vector2;
 export var cell_height_pixels :  int;
+export var teleport_on_jump : bool;
 export var can_teleport_only_once : bool;
 export var also_teleport_switch : bool;
 
@@ -20,17 +21,34 @@ func _ready():
 	tilemap = get_sibling_node("collideableTiles").get_node("TileMap");
 	is_at_origin_tilemap = true;
 	switch_teleportation_vector = cell_height_pixels * teleportation_vector;
+	if (trigger_mechanic_is_jump()):
+		hide_switch();
 	
 func _process(_delta):
-	var select_key_pressed = Input.is_action_just_pressed("ui_select")
-	if (select_key_pressed && is_allowed_to_teleport() && PLAYER_IS_NEAR_SWITCH):
+	if (is_teleport_triggered() && is_allowed_to_teleport()):
 		teleport_platform();
-		if (also_teleport_switch):
+		if (trigger_mechanic_is_switch() && also_teleport_switch):
 			teleport_switch();
 		update_tilemap_collision_area();
 		update_platform_location_tracker();
-		update_switch_ui();
+		if (trigger_mechanic_is_switch()):
+			update_switch_ui();
 
+func is_teleport_triggered():
+	if (trigger_mechanic_is_jump()):
+		return Input.is_action_just_pressed("jump");
+	else:
+		return Input.is_action_just_pressed("ui_select") && PLAYER_IS_NEAR_SWITCH;
+		
+func trigger_mechanic_is_switch():
+	return !teleport_on_jump;
+	
+func trigger_mechanic_is_jump():
+	return teleport_on_jump;
+	
+func hide_switch():
+	get_node("Switch").set_texture(null);
+	
 func is_allowed_to_teleport():
 	return !can_teleport_only_once || (can_teleport_only_once && is_at_origin_tilemap)
 
@@ -42,7 +60,7 @@ func update_tilemap_collision_area():
 	
 func update_switch_ui():
 	if (!is_allowed_to_teleport()):
-		get_node("Sprite").set_texture(SWITCH_OFF_TEXTURE);
+		get_node("Switch").set_texture(SWITCH_OFF_TEXTURE);
 
 func update_platform_location_tracker():
 	is_at_origin_tilemap = !is_at_origin_tilemap;
