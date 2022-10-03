@@ -15,7 +15,7 @@ extents = Vector2( 33, 33 )
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 3 )
-next_level = "res://levels/Level-12.tscn"
+next_level = "res://levels/Level-10.tscn"
 
 [node name="collideableTiles" type="Area2D" parent="."]
 
@@ -45,7 +45,7 @@ scale = Vector2( 0.170615, 0.170615 )
 texture = ExtResource( 6 )
 
 [node name="playerCharacter" parent="." instance=ExtResource( 2 )]
-position = Vector2( 968, 520 )
+position = Vector2( 981, 543 )
 
 [node name="MainCameraCenter" type="Node2D" parent="."]
 position = Vector2( 512, 288 )
