@@ -64,7 +64,6 @@ frames = SubResource( 3 )
 animation = "jump-angel"
 
 [node name="DeathTimer" type="Timer" parent="."]
-wait_time = 3.0
 one_shot = true
 
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
